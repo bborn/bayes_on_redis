@@ -9,7 +9,12 @@ class BayesOnRedis
   attr_reader :redis, :stopwords
 
   def initialize(options)
-    @redis = Redis.new(:host => options[:redis_host], :port => options[:redis_port], :db => options[:redis_db])
+    if options.is_a?(Hash)
+      @redis = Redis.new(:host => options[:redis_host], :port => options[:redis_port], :db => options[:redis_db])      
+    else
+      @redis = options
+    end
+
     @stopwords = Stopword.new
   end
 
